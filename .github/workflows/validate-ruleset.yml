@@ -36,3 +36,48 @@ jobs:
         run: |
           dart run bin/agents.dart ruleset add vibe-coding-rules "$GITHUB_WORKSPACE"
           dart run bin/agents.dart ruleset validate vibe-coding-rules
+
+  profile-smoke-test:
+    needs: validate
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - go_router_get_it
+          - flutter_modular_v5
+          - flutter_modular_v6
+          - flutter_modular_v7
+    steps:
+      - name: Check out dynamic rules
+        uses: actions/checkout@v4
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Check out Flutter Agents CLI
+        uses: actions/checkout@v4
+        with:
+          repository: dhikaz007/flutter_agents_cli
+          path: flutter_agents_cli
+
+      - name: Install CLI dependencies
+        working-directory: flutter_agents_cli
+        run: dart pub get
+
+      - name: Initialize and apply profile
+        env:
+          FLUTTER_AGENTS_HOME: ${{ runner.temp }}/flutter-agents
+          PROFILE: ${{ matrix.profile }}
+        run: |
+          dart run "$GITHUB_WORKSPACE/flutter_agents_cli/bin/agents.dart" ruleset add vibe-coding-rules "$GITHUB_WORKSPACE"
+          project="$RUNNER_TEMP/profile-smoke-$PROFILE"
+          mkdir -p "$project"
+          cd "$project"
+          dart run "$GITHUB_WORKSPACE/flutter_agents_cli/bin/agents.dart" init --yes
+          dart run "$GITHUB_WORKSPACE/flutter_agents_cli/bin/agents.dart" ruleset use vibe-coding-rules "$PROFILE"
+          test -f PROJECT_PROFILE.md
+          grep -Fx "profile: $PROFILE" PROJECT_PROFILE.md
+          test -f "docs/dynamic-rules/profiles/$PROFILE/ARCHITECTURE.md"
+          test -f "docs/dynamic-rules/profiles/$PROFILE/ROUTING.md"
+          grep -q "docs/dynamic-rules" AGENTS.md

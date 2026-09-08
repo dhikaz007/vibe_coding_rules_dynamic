@@ -23,4 +23,4 @@ Each profile includes `profile.yaml` metadata so Flutter Agents CLI can create a
 
 ## Continuous validation
 
-Every push and pull request to `main` runs `agents ruleset validate` through GitHub Actions. The check rejects missing required profile documents or metadata before the rules are merged.
+Every push and pull request to `main` runs `agents ruleset validate` through GitHub Actions. The check rejects missing required profile documents or metadata before the rules are merged. A profile smoke test also initializes a temporary project with each available profile and confirms its generated dynamic rule files.
