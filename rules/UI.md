@@ -7,5 +7,5 @@
 - Every function declares an explicit return type. Use `void` for actions without a result. For several related return values, use a typed named record, for example `(String statusText, Color backgroundColor, Color textColor) getStatus()`.
 - Do not extract UI into `_buildXxx()` or other widget-returning methods. A meaningful extracted section is a public `XxxWidget` in the owning feature's widget/component folder and is exported through its barrel.
 - Private widget classes such as `_XxxWidget extends StatelessWidget` or `StatefulWidget` are forbidden.
-- Every Dart source folder has a barrel file, even with one file. Name it after the folder, import public types through it, and export every new public file in the same change.
+- Every Dart source folder has a barrel file with no exception, even when it contains only one Dart file. Name it after the folder, import public types through it, and export every public file in the same change.
 - Paginated-list back-to-top uses the shared `PaginationFAB`. When other floating actions exist, preserve their primary action and compose the FAB layout, hierarchy, and spacing to match the screen.
