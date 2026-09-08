@@ -9,7 +9,9 @@ Before any code change:
 1. Read the consuming project's `PROJECT_PROFILE.md`.
 2. Accept only one of these values:
    - `go_router_get_it`
-   - `flutter_modular`
+   - `flutter_modular_v5`
+   - `flutter_modular_v6`
+   - `flutter_modular_v7`
 3. Read `rules/CORE.md`, then the selected profile's `ARCHITECTURE.md`, `ROUTING.md`, `DEPENDENCY-INJECTION.md`, and `FOLDER-STRUCTURE.md` only when the task touches that concern.
 4. Read the relevant universal rule under `rules/` only when its concern is touched.
 

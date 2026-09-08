@@ -5,7 +5,9 @@ One reusable Flutter rule set with selectable architecture profiles.
 ## Available profiles
 
 - `go_router_get_it` — `go_router`, `go_router_builder`, `get_it`, and `injectable`.
-- `flutter_modular` — `flutter_modular` binds and routing.
+- `flutter_modular_v5` — legacy `Module`, `ChildRoute`/`ModuleRoute`, `Bind`, and `RouteGuard`.
+- `flutter_modular_v6` — `routes(r)`, `r.child`/`r.module`, module imports, and `exportedBinds`.
+- `flutter_modular_v7` — `createModule`, `ModularApp.routerConfigOf`, function guards, and v7 bind APIs.
 
 ## Use in an application
 
