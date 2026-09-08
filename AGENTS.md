@@ -2,6 +2,12 @@
 
 This repository provides reusable Flutter coding rules. A consuming project selects **one** stack profile in its own `PROJECT_PROFILE.md`.
 
+## Repository maintenance
+
+- Before every commit and push, review `README.md` for GitHub-facing documentation impact.
+- Every user-facing rule, profile, dependency, workflow, installation step, or release change must update `README.md` in the same commit.
+- Do not claim a commit or push is complete until the repository is clean and the README review is complete.
+
 ## 1. Select the profile first
 
 Before any code change:
