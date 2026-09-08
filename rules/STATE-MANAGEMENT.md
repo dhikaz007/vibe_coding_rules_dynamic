@@ -12,4 +12,4 @@
 - Every paginated list uses `PagedListView.separated`, and it must provide all four required indicator builders.
 - Every aligned paginated grid uses `PagedAlignedGridView.count`, and it must provide all four required indicator builders.
 - Every paginated list follows the project's pull-to-refresh convention.
-- Provide shared `PaginationFAB` after the screen-defined scroll threshold, driven by a screen-owned `ScrollController` and `ValueNotifier<bool>`. Its action animates to offset `0`; dispose both objects with the screen lifecycle. Do not replace another existing FAB—compose it with the existing floating action layout.
+- Provide shared `PaginationFAB` when the screen-owned `ScrollController.offset` crosses the screen-defined threshold, using a screen-owned `ValueNotifier<bool>`. Its action animates to offset `0`; dispose both objects with the screen lifecycle. Do not replace another existing FAB—compose it with the existing floating action layout.

@@ -12,8 +12,9 @@ Before any code change:
    - `flutter_modular_v5`
    - `flutter_modular_v6`
    - `flutter_modular_v7`
-3. Read `rules/CORE.md`, then the selected profile's `ARCHITECTURE.md`, `ROUTING.md`, `DEPENDENCY-INJECTION.md`, and `FOLDER-STRUCTURE.md` only when the task touches that concern.
-4. Read the relevant universal rule under `rules/` only when its concern is touched.
+3. Read `rules/CORE.md`.
+4. For each concern the task touches, read only the matching selected-profile document: `ARCHITECTURE.md`, `ROUTING.md`, `DEPENDENCY-INJECTION.md`, or `FOLDER-STRUCTURE.md`.
+5. Read only the matching universal rule under `rules/`; do not preload unrelated profile or universal rules.
 
 Never load or mix multiple profiles. If `PROJECT_PROFILE.md` is missing or invalid, stop and ask for the profile; do not infer it from dependencies.
 
