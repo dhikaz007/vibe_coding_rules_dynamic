@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+
+      - name: Validate ruleset structure
+        uses: actions/checkout@v4
+        with:
+          repository: dhikaz007/flutter_agents_cli
+          path: flutter_agents_cli
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install CLI dependencies
+        working-directory: flutter_agents_cli
+        run: dart pub get
+
+      - name: Validate dynamic ruleset
+        working-directory: flutter_agents_cli
+        env:
+          FLUTTER_AGENTS_HOME: ${{ runner.temp }}/flutter-agents
+        run: |
+          dart run bin/agents.dart ruleset add vibe-coding-rules "$GITHUB_WORKSPACE"
+          dart run bin/agents.dart ruleset validate vibe-coding-rules
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes --title "$GITHUB_REF_NAME"

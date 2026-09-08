@@ -1,5 +1,8 @@
 # Vibe Coding Rules Dynamic
 
+[![Validation](https://github.com/dhikaz007/vibe_coding_rules_dynamic/actions/workflows/validate-ruleset.yml/badge.svg)](https://github.com/dhikaz007/vibe_coding_rules_dynamic/actions/workflows/validate-ruleset.yml)
+[![Release](https://github.com/dhikaz007/vibe_coding_rules_dynamic/actions/workflows/release.yml/badge.svg)](https://github.com/dhikaz007/vibe_coding_rules_dynamic/actions/workflows/release.yml)
+
 One reusable Flutter rule set with selectable architecture profiles.
 
 ## Available profiles
@@ -20,6 +23,15 @@ profile: go_router_get_it
 Universal rules are under `rules/`. Stack-specific rules are under `profiles/<profile>/`. Do not combine profile documents in a single application.
 
 Each profile includes `profile.yaml` metadata so Flutter Agents CLI can create a preset and determine its architecture, routing, DI, and compatible dependencies.
+
+## Release
+
+Push a version tag after validation succeeds to create a GitHub Release with generated notes:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
 
 ## Continuous validation
 
