@@ -12,6 +12,8 @@
 - Do not extract simple layout wrappers, one-off `Padding`, `Row`, `Column`, `PreferredSize`, `InputDecoration`, list-item callbacks, or short inline builders merely to reduce line count.
 - Prefer one screen file while its visual flow remains readable.
 - A widget reused by multiple features belongs in the consuming project's shared/global widget folder; a widget used by one feature belongs in that feature's `widgets/` folder. Do not create a new `components/` folder unless the selected profile or existing project structure already uses it.
+- Do not extract small visual configuration into helper functions solely to reduce line count, including `BoxDecoration`, `EdgeInsets`, `TextStyle`, `BorderRadius`, `BorderSide`, and simple `InputDecoration`.
+- Keep one-off visual configuration inline where it is used. When the same visual container is reused, prefer an existing shared widget or create a public widget in the correct shared/feature `widgets/` folder; do not share only a decoration helper.
 - Keep Cubit/Bloc state rendering inline in the screen by default.
 - Do not create `XxxContentComponent`, `XxxLoadingComponent`, `XxxErrorComponent`, or similar widgets solely to represent branches of one page state.
 - Keep a `state.when`, `state.map`, switch expression, or `BlocBuilder` branch inline while its visual flow remains readable.
