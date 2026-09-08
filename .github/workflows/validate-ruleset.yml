@@ -1,0 +1,38 @@
+name: Validate dynamic ruleset
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out dynamic rules
+        uses: actions/checkout@v4
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Check out Flutter Agents CLI
+        uses: actions/checkout@v4
+        with:
+          repository: dhikaz007/flutter_agents_cli
+          path: flutter_agents_cli
+
+      - name: Install CLI dependencies
+        working-directory: flutter_agents_cli
+        run: dart pub get
+
+      - name: Validate ruleset structure and profile metadata
+        working-directory: flutter_agents_cli
+        env:
+          FLUTTER_AGENTS_HOME: ${{ runner.temp }}/flutter-agents
+        run: |
+          dart run bin/agents.dart ruleset add vibe-coding-rules "$GITHUB_WORKSPACE"
+          dart run bin/agents.dart ruleset validate vibe-coding-rules
