@@ -1,0 +1,8 @@
+architecture: feature_first_pragmatic_clean
+routing: go_router
+di: injectable_get_it
+dependencies:
+  go_router: any
+  go_router_builder: any
+  get_it: any
+  injectable: any

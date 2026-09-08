@@ -18,3 +18,5 @@ profile: go_router_get_it
 ```
 
 Universal rules are under `rules/`. Stack-specific rules are under `profiles/<profile>/`. Do not combine profile documents in a single application.
+
+Each profile includes `profile.yaml` metadata so Flutter Agents CLI can create a preset and determine its architecture, routing, DI, and compatible dependencies.
