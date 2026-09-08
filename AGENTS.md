@@ -15,7 +15,7 @@ Before any code change:
 3. Read `rules/CORE.md`, then the selected profile's `ARCHITECTURE.md`, `ROUTING.md`, `DEPENDENCY-INJECTION.md`, and `FOLDER-STRUCTURE.md` only when the task touches that concern.
 4. Read the relevant universal rule under `rules/` only when its concern is touched.
 
-Never load or mix both profiles. If `PROJECT_PROFILE.md` is missing or invalid, stop and ask for the profile; do not infer it from dependencies.
+Never load or mix multiple profiles. If `PROJECT_PROFILE.md` is missing or invalid, stop and ask for the profile; do not infer it from dependencies.
 
 ## 2. Universal rule router
 

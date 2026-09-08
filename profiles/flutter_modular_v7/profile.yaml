@@ -3,3 +3,5 @@ routing: flutter_modular
 di: flutter_modular
 dependencies:
   flutter_modular: ^7.1.0
+sdk_constraints:
+  dart: project-verified
