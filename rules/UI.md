@@ -12,5 +12,10 @@
 - Do not extract simple layout wrappers, one-off `Padding`, `Row`, `Column`, `PreferredSize`, `InputDecoration`, list-item callbacks, or short inline builders merely to reduce line count.
 - Prefer one screen file while its visual flow remains readable.
 - A widget reused by multiple features belongs in the consuming project's shared/global widget folder; a widget used by one feature belongs in that feature's `widgets/` folder. Do not create a new `components/` folder unless the selected profile or existing project structure already uses it.
+- Keep Cubit/Bloc state rendering inline in the screen by default.
+- Do not create `XxxContentComponent`, `XxxLoadingComponent`, `XxxErrorComponent`, or similar widgets solely to represent branches of one page state.
+- Keep a `state.when`, `state.map`, switch expression, or `BlocBuilder` branch inline while its visual flow remains readable.
+- Reuse an existing shared loading, error, or empty-state widget inline; do not wrap it in a page-specific component.
+- Extract a state branch only when it is reused, independently stateful, or large enough to obscure the screen flow under the widget-extraction rule.
 - Every Dart source folder has a barrel file with no exception, even when it contains only one Dart file. Name it after the folder, import public types through it, and export every public file in the same change.
 - Paginated-list back-to-top uses the shared `PaginationFAB`. When other floating actions exist, preserve their primary action and compose the FAB layout, hierarchy, and spacing to match the screen.
