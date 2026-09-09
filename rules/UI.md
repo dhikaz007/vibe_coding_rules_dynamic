@@ -1,23 +1,47 @@
 # UI
 
-- Reuse the consuming project's shared/core widgets, tokens, localization, and generated assets before creating a new component.
-- All user-facing text uses the project's localization system and generated keys; do not hardcode user-facing strings.
-- Use the project date formatter and theme values; support system text scaling and safe-area ownership.
-- Use semantic button widgets for button-like actions, Flutter `TabBar`/`TabBarView` for tabs, and generated SVG assets before icon-library fallbacks.
-- Every function declares an explicit return type. Use `void` for actions without a result. For several related return values, use a typed record, for example `(String statusText, Color backgroundColor, Color textColor) getStatus()`.
-- Do not extract UI into `_buildXxx()` or other widget-returning methods. An extracted section is always a public `XxxWidget` and is exported through its barrel.
-- Private widget classes such as `_XxxWidget extends StatelessWidget` or `StatefulWidget` are forbidden.
-- Keep page-specific UI inline in the screen by default.
-- Extract a public `XxxWidget` only when the section is reused, independently stateful, materially improves readability, or is large enough to obscure the screen flow.
-- Do not extract simple layout wrappers, one-off `Padding`, `Row`, `Column`, `PreferredSize`, `InputDecoration`, list-item callbacks, or short inline builders merely to reduce line count.
-- Prefer one screen file while its visual flow remains readable.
-- A widget reused by multiple features belongs in the consuming project's shared/global widget folder; a widget used by one feature belongs in that feature's `widgets/` folder. Do not create a new `components/` folder unless the selected profile or existing project structure already uses it.
-- Do not extract small visual configuration into helper functions solely to reduce line count, including `BoxDecoration`, `EdgeInsets`, `TextStyle`, `BorderRadius`, `BorderSide`, and simple `InputDecoration`.
-- Keep one-off visual configuration inline where it is used. When the same visual container is reused, prefer an existing shared widget or create a public widget in the correct shared/feature `widgets/` folder; do not share only a decoration helper.
-- Keep Cubit/Bloc state rendering inline in the screen by default.
-- Do not create `XxxContentComponent`, `XxxLoadingComponent`, `XxxErrorComponent`, or similar widgets solely to represent branches of one page state.
-- Keep a `state.when`, `state.map`, switch expression, or `BlocBuilder` branch inline while its visual flow remains readable.
-- Reuse an existing shared loading, error, or empty-state widget inline; do not wrap it in a page-specific component.
-- Extract a state branch only when it is reused, independently stateful, or large enough to obscure the screen flow under the widget-extraction rule.
-- Every Dart source folder has a barrel file with no exception, even when it contains only one Dart file. Name it after the folder, import public types through it, and export every public file in the same change.
-- Paginated-list back-to-top uses the shared `PaginationFAB`. When other floating actions exist, preserve their primary action and compose the FAB layout, hierarchy, and spacing to match the screen.
+Load for screen/widget/design/localization/assets/theme work. `<DESIGN.md>` remains the visual authority.
+
+## Localization
+
+- All user-facing text uses `easy_localization`; no hardcoded UI strings.
+- Use generated `LocaleKeys`, never raw translation-key strings.
+- TEMPLATE-PROJECT: translations path `<assets/translations>`, locale `<DEFAULT_LOCALE>`.
+- Interpolation uses `namedArgs`.
+- When localization keys change, load `CODEGEN.md` and run the required localization generation commands.
+
+## Core-widget first
+
+Prefer existing core components:
+- Button → `AppButton`
+- Text → `AppText`
+- TextField → `AppTextField`
+- SVG → `AppSvg`
+- Spacing → project `AppSpacing`/`AppDimensions`, not raw spacing widgets in screens
+- Feedback → project flushbar helper, not `ScaffoldMessenger.showSnackBar`
+
+Before creating a component, search existing `core/widgets` and feature widgets/components.
+
+Interaction conventions:
+- Chip-like control → Flutter Chip family first; use transparent side if project theme otherwise adds unwanted border.
+- Tabs/segments → `TabBar` + `TabBarView` first; TEMPLATE-PROJECT default: no swipe (`NeverScrollableScrollPhysics`).
+- Button-like actions → `TextButton`/`IconButton`/`TextButton.icon`, not `GestureDetector`.
+- `GestureDetector`/`InkWell` is for non-button tappable surfaces.
+- Icons → Figma-exported SVG/generated asset first; fallback to `<ICON_LIBRARY>` only when no asset exists. Do not use default `Icons.*` if project policy chooses a dedicated icon library.
+- Rich inline text → `Text.rich(...)`.
+- App-wide missing reusable primitive → create once in `core/widgets` with `app_` prefix.
+
+## Visual/system conventions
+
+- Colors/typography/spacing/radius/components/navigation/screen states follow the relevant `<DESIGN.md>` section.
+- Date/time: TEMPLATE-PROJECT `<DEFAULT_TIMEZONE>`, `<DATE_FORMAT>`, `<DEFAULT_LOCALE_CODE>` through shared `AppDateFormatter`; do not instantiate DateFormat repeatedly in features.
+- Paginated-list back-to-top uses the shared `PaginationFAB`. When it shares a screen with other floating actions, preserve the existing primary action and follow the screen's established FAB hierarchy, spacing, and layout.
+- Every function declares an explicit return type. Use `void` for an action with no result; when returning multiple related values, use a typed named record rather than `dynamic`, a loosely typed collection, or parallel helpers.
+- Do not extract UI into `_buildXxx()` or other widget-returning methods. A meaningful extracted UI section is a public `XxxWidget` class in the owning feature's `presentation/widgets/` or `presentation/components/` folder and is exported through its barrel. Private widget classes (`_XxxWidget`) are forbidden.
+- WCAG 2.1 AA contrast; support system text scaling up to 200%.
+- TEMPLATE-PROJECT orientation policy; default portrait unless a specified preview/document screen requires landscape.
+- Safe-area behavior follows shell ownership: avoid double SafeArea; custom bottom bars/sheets include device bottom inset when Scaffold does not already handle it.
+- Use `AppBar` for standard child-screen headers unless the design explicitly requires another pattern.
+- TEMPLATE-PROJECT: badge/count behavior if applicable.
+
+Assets and generated references follow `ARCHITECTURE.md`; load `CODEGEN.md` only when assets/generated refs actually change.
