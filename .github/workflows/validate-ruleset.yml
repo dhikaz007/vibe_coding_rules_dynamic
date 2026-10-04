@@ -83,10 +83,12 @@ jobs:
           cd "$project"
           dart run "$GITHUB_WORKSPACE/flutter_agents_cli/bin/agents.dart" init --yes
           dart run "$GITHUB_WORKSPACE/flutter_agents_cli/bin/agents.dart" ruleset use vibe-coding-rules "$PROFILE"
+          dart run "$GITHUB_WORKSPACE/flutter_agents_cli/bin/agents.dart" ruleset map --all
           test -f PROJECT_PROFILE.md
           grep -Fx "profile: $PROFILE" PROJECT_PROFILE.md
           test -f "docs/dynamic-rules/profiles/$PROFILE/ARCHITECTURE.md"
           test -f "docs/dynamic-rules/profiles/$PROFILE/ROUTING.md"
           grep -q "docs/dynamic-rules" AGENTS.md
           test "$(ls docs/dynamic-rules/profiles | wc -l)" -eq 1
-          test -n "$(ls -A docs/dynamic-rules/rules)"
+          test -f docs/dynamic-rules/rules/STATE-MANAGEMENT.md
+          test -f docs/dynamic-rules/rules/CORE.md
