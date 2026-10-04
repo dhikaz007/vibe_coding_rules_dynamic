@@ -38,6 +38,8 @@ docs/RULES-MAP.md
 
 Replace `go_router_get_it` with one of the profiles above. Do not combine profile documents in a single application.
 
+A universal rule reaches a project only when the CLI knows its concern name. `ENVIRONMENT.md` requires Flutter Agents CLI `2.7.0` or newer; on an older CLI the file is skipped instead of installed, and the project silently loses its environment rules.
+
 Without the CLI, copy [templates/PROJECT_PROFILE.md](templates/PROJECT_PROFILE.md) to the application root and configure the agent entrypoint to read this repository's `AGENTS.md` before implementation:
 
 ```md
