@@ -90,5 +90,10 @@ jobs:
           test -f "docs/dynamic-rules/profiles/$PROFILE/ROUTING.md"
           grep -q "docs/dynamic-rules" AGENTS.md
           test "$(ls docs/dynamic-rules/profiles | wc -l)" -eq 1
-          test -f docs/dynamic-rules/rules/STATE-MANAGEMENT.md
-          test -f docs/dynamic-rules/rules/CORE.md
+          for source in "$GITHUB_WORKSPACE"/rules/*.md; do
+            name="$(basename "$source")"
+            if [ ! -f "docs/dynamic-rules/rules/$name" ]; then
+              echo "::error::universal rule $name did not install into the project"
+              exit 1
+            fi
+          done
