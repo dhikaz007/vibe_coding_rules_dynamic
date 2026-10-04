@@ -14,7 +14,31 @@ One reusable Flutter rule set with selectable architecture profiles.
 
 ## Use in an application
 
-Copy [templates/PROJECT_PROFILE.md](templates/PROJECT_PROFILE.md) to the root of the Flutter application and select exactly one profile. Configure the application's agent entrypoint to read this repository's `AGENTS.md` before implementation.
+Install with Flutter Agents CLI, from the root of the Flutter application:
+
+```bash
+agents ruleset add vibe-coding-rules https://github.com/dhikaz007/vibe_coding_rules_dynamic
+agents ruleset use vibe-coding-rules go_router_get_it
+agents ruleset map --all
+```
+
+The third step is required. `ruleset use` installs only the profile documents; `ruleset map --all` is what installs the universal rules from `rules/`. Without it, `docs/dynamic-rules/rules/` is never created.
+
+The installed layout is:
+
+```text
+PROJECT_PROFILE.md
+docs/dynamic-rules/profiles/<profile>/ARCHITECTURE.md
+docs/dynamic-rules/profiles/<profile>/ROUTING.md
+docs/dynamic-rules/profiles/<profile>/DEPENDENCY-INJECTION.md
+docs/dynamic-rules/profiles/<profile>/FOLDER-STRUCTURE.md
+docs/dynamic-rules/rules/*.md
+docs/RULES-MAP.md
+```
+
+Replace `go_router_get_it` with one of the profiles above. Do not combine profile documents in a single application.
+
+Without the CLI, copy [templates/PROJECT_PROFILE.md](templates/PROJECT_PROFILE.md) to the application root and configure the agent entrypoint to read this repository's `AGENTS.md` before implementation:
 
 ```md
 profile: go_router_get_it
@@ -23,8 +47,9 @@ profile: go_router_get_it
 Universal rules are under `rules/` and include the complete state-management,
 pagination, UI, code-generation, network, security, testing, and workflow
 contracts. Stack-specific routing, DI, architecture, and folder conventions
-are under `profiles/<profile>/`. Do not combine profile documents in a single
-application.
+are under `profiles/<profile>/`. Those decisions are never repeated inside
+`rules/`; a universal rule states the decision and delegates the mechanism to
+the selected profile.
 
 Each profile includes `profile.yaml` metadata so Flutter Agents CLI can create a preset and determine its architecture, routing, DI, and compatible dependencies.
 
