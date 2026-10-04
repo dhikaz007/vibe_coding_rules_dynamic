@@ -39,4 +39,6 @@ git push origin v1.0.0
 
 ## Continuous validation
 
-Every push and pull request to `main` runs `agents ruleset validate` through GitHub Actions. The check rejects missing required profile documents or metadata before the rules are merged. A profile smoke test also initializes a temporary project with each available profile and confirms its generated dynamic rule files.
+Every push and pull request to `main` runs `agents ruleset validate` through GitHub Actions. The check rejects missing required profile documents or metadata before the rules are merged. A second check rejects any stack-specific API named inside `rules/`, because universal rules are copied into every profile and must delegate routing, DI, and folder decisions to `profiles/<selected>/`.
+
+A profile smoke test also initializes a temporary project with each available profile and confirms its generated dynamic rule files, that exactly one profile was installed, and that the universal rules were installed.

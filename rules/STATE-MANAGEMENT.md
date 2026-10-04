@@ -7,39 +7,33 @@ Load when changing Cubit/state/provider/listener/loading/async/pagination/local 
 Determine lifecycle from the complete navigation flow before creating or registering a Cubit.
 
 ```text
-New/page-owned instance        → @injectable + BlocProvider(create:)
+New/page-owned instance        → BlocProvider(create:)
 Same instance intentionally
-reused across the flow         → @lazySingleton + BlocProvider.value
+reused across the flow         → BlocProvider.value
 ```
 
-New/page-owned:
+This rule decides only new versus reused. The registration call, the lifetime
+annotation, and the resolution call belong to the selected profile's
+`DEPENDENCY-INJECTION.md`; this file never names them.
+
+The provider shape is the same in every profile. `resolve<T>()` below is a
+placeholder, not a real call: replace it with the resolution API the selected
+profile documents.
 
 ```dart
-@injectable
 class XxxCubit extends Cubit<XxxState> { ... }
 
 BlocProvider(
-  create: (_) => getIt<XxxCubit>()..load(),
+  create: (_) => resolve<XxxCubit>()..load(),
   child: const XxxScreen(),
 )
 ```
 
-Reused:
-
-```dart
-@lazySingleton
-class XxxCubit extends Cubit<XxxState> { ... }
-
-BlocProvider.value(
-  value: getIt<XxxCubit>(),
-  child: const NextScreen(),
-)
-```
-
 Rules:
-- `.value` means expose an existing instance; do not use it merely because get_it can resolve one.
+- `.value` means expose an existing instance; do not use it merely because the DI container can resolve one.
 - Do not recreate a Cubit when downstream screens must keep the same state.
-- `@lazySingleton` may be app-wide or intentionally flow-reused; do not make every Cubit singleton.
+- A shared lifetime may be app-wide or intentionally flow-reused; do not make every Cubit singleton.
+- If the project has no comparable Cubit lifecycle to follow, ask before choosing one instead of guessing.
 - Multiple independent controllers on one page may use `MultiBlocProvider`, mixing `.value` and `create:` according to lifecycle.
 - One primary Cubit per feature is a default, not a prohibition; add another only for independently meaningful lifecycle/responsibility.
 

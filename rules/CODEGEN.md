@@ -24,7 +24,7 @@ dart run build_runner clean
 dart run build_runner watch --delete-conflicting-outputs
 ```
 
-Run after changes to Freezed/json_serializable, Injectable registration, typed GoRouter routes, or project asset generation.
+Run after changes to Freezed/json_serializable, dependency registration, typed route generation, or project asset generation. Dependency registration and route generation are owned by the selected profile.
 
 Localization generation (TEMPLATE-PROJECT: keep only commands used by the project):
 

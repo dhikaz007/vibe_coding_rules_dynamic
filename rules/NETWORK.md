@@ -14,7 +14,7 @@ Cross-cutting request behavior belongs in interceptors, not datasources:
 
 ## Connectivity/offline
 
-- `ConnectivityService` (`@lazySingleton`) exposes online/offline status; UI/business consumers do not call `connectivity_plus` directly.
+- `ConnectivityService` (one app-wide shared instance; register it through the selected profile) exposes online/offline status; UI/business consumers do not call `connectivity_plus` directly.
 - Interface connectivity is only a hint; actual request `DioException` connection failures are authoritative evidence too.
 - Both signals update the same connectivity state.
 - Offline UI follows `<DESIGN.md>`; preserve stale safe content when required.

@@ -37,6 +37,13 @@ jobs:
           dart run bin/agents.dart ruleset add vibe-coding-rules "$GITHUB_WORKSPACE"
           dart run bin/agents.dart ruleset validate vibe-coding-rules
 
+      - name: Guard universal rules against stack-specific APIs
+        run: |
+          if grep -nEi 'go_router|go_router_builder|get_it|getit|injectable|lazysingleton|flutter_modular|modular\.get|ChildRoute|ModuleRoute|RouteGuard|addsingleton|exportedBinds|\bBind\b|r\.child|r\.module' rules/*.md; then
+            echo "::error::rules/*.md is universal and must not name a stack-specific API. Delegate to profiles/<selected>/."
+            exit 1
+          fi
+
   profile-smoke-test:
     needs: validate
     runs-on: ubuntu-latest
@@ -81,3 +88,5 @@ jobs:
           test -f "docs/dynamic-rules/profiles/$PROFILE/ARCHITECTURE.md"
           test -f "docs/dynamic-rules/profiles/$PROFILE/ROUTING.md"
           grep -q "docs/dynamic-rules" AGENTS.md
+          test "$(ls docs/dynamic-rules/profiles | wc -l)" -eq 1
+          test -n "$(ls -A docs/dynamic-rules/rules)"
