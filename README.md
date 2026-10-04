@@ -45,9 +45,10 @@ profile: go_router_get_it
 ```
 
 Universal rules are under `rules/` and include the complete state-management,
-pagination, UI, code-generation, network, security, testing, and workflow
-contracts. Stack-specific routing, DI, architecture, and folder conventions
-are under `profiles/<profile>/`. Those decisions are never repeated inside
+pagination, UI, code-generation, JSON/serialization contract (`build.yaml`
+field renaming, enum fallbacks, converters), network, security, testing, and
+workflow contracts. Stack-specific routing, DI, architecture, and folder
+conventions are under `profiles/<profile>/`. Those decisions are never repeated inside
 `rules/`; a universal rule states the decision and delegates the mechanism to
 the selected profile.
 
