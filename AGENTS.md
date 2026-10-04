@@ -32,6 +32,7 @@ Never load or mix multiple profiles. If `PROJECT_PROFILE.md` is missing or inval
 | Cubit, async state, pagination, local state | `rules/STATE-MANAGEMENT.md` |
 | API contract, transport, repository/error behavior | `rules/NETWORK.md` |
 | Tokens, secrets, storage, mutations, telemetry | `rules/SECURITY.md` |
+| Env vars, flavors, `AppConfig`, build-time defines | `rules/ENVIRONMENT.md` |
 | Freezed, JSON, routing/assets/localization generation | `rules/CODEGEN.md` |
 | Tests | `rules/TESTING.md` |
 | Substantial feature, migration, refactor | `rules/WORKFLOW.md` |
