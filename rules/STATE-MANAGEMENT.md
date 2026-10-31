@@ -121,8 +121,8 @@ Requirements:
 - refresh keeps old content visible until replacement data is ready
 - every `Paged*View` provides `newPageProgressIndicatorBuilder`, `firstPageProgressIndicatorBuilder`, `firstPageErrorIndicatorBuilder`, and `noItemsFoundIndicatorBuilder`; never use the package defaults for these states
 - use `PagedListView.separated` for paginated lists and `PagedAlignedGridView.count` for aligned paginated grids
-- provide a shared `PaginationFAB` back-to-top action after the screen-defined scroll threshold, driven by a screen-owned `ScrollController` and `ValueNotifier<bool>`; dispose both with the screen lifecycle
-- if another floating action already exists, preserve its primary purpose and compose/position `PaginationFAB` within that existing FAB layout rather than replacing it
+- provide a shared back-to-top action after the screen-defined scroll threshold, driven by a screen-owned `ScrollController` and `ValueNotifier<bool>`; dispose both with the screen lifecycle. Resolve the widget from the `pagination_fab` role; if the role is `none observed`, skip the back-to-top affordance instead of creating one
+- if another floating action already exists, preserve its primary purpose and compose/position the back-to-top action within that existing FAB layout rather than replacing it
 
 Use the installed package API/version already present in the project rather than copying stale sample syntax.
 

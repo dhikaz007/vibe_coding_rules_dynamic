@@ -40,6 +40,11 @@ STATE-MANAGEMENT.md  TESTING.md  UI.md  WORKFLOW.md
 If `docs/dynamic-rules/rules/` is empty, `map --all` did not run. If `PROJECT_PROFILE.md` names a different profile than the one you want, run `ruleset use` again — a project holds exactly one profile.
 
 After that, ask the agent for the work. It reads `PROJECT_PROFILE.md` and loads only the rules for the concerns your task actually touches.
+On the first task that needs a shared widget or helper, the agent scans the
+project once and writes `docs/dynamic-rules/PROJECT-CONVENTIONS.md`, recording
+the real widget folder, component names, formatters, and layout. A fresh
+project with nothing to scan gets `mode: fresh` and uses the profile defaults
+with no questions. Later sessions read the file and never rescan.
 
 ## Available profiles
 
@@ -60,6 +65,7 @@ docs/dynamic-rules/profiles/<profile>/DEPENDENCY-INJECTION.md
 docs/dynamic-rules/profiles/<profile>/FOLDER-STRUCTURE.md
 docs/dynamic-rules/rules/*.md
 docs/RULES-MAP.md
+docs/dynamic-rules/PROJECT-CONVENTIONS.md   (created by the agent, not the CLI)
 ```
 
 `docs/RULES-MAP.md` records which source is active per concern, so a project rule can override a dynamic one without deleting either.

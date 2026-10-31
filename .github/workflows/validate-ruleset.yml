@@ -44,6 +44,22 @@ jobs:
             exit 1
           fi
 
+      - name: Guard universal rules against project-local symbols
+        run: |
+          if grep -nE 'AppButton|AppText|AppTextField|AppSvg|AppSpacing|AppDimensions|AppDateFormatter|PaginationFAB|core/widgets|presentation/widgets' rules/*.md; then
+            echo "::error::rules/*.md must resolve symbols and paths via docs/dynamic-rules/PROJECT-CONVENTIONS.md, not hardcode project-local names."
+            exit 1
+          fi
+
+      - name: Verify conventions template shape
+        run: |
+          tpl=templates/PROJECT-CONVENTIONS.md
+          for role in text button text_field svg feedback date_formatter spacing pagination_fab; do
+            grep -q "| $role |" "$tpl" || { echo "::error::template missing role $role"; exit 1; }
+          done
+          grep -q "## Unresolved" "$tpl" || { echo "::error::template missing ## Unresolved"; exit 1; }
+          grep -q "mode:" "$tpl" || { echo "::error::template missing mode comment"; exit 1; }
+
   profile-smoke-test:
     needs: validate
     runs-on: ubuntu-latest
