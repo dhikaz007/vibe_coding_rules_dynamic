@@ -21,6 +21,7 @@ Before any code change:
 3. Read `rules/CORE.md`.
 4. For each concern the task touches, read only the matching selected-profile document: `ARCHITECTURE.md`, `ROUTING.md`, `DEPENDENCY-INJECTION.md`, or `FOLDER-STRUCTURE.md`.
 5. Read only the matching universal rule under `rules/`; do not preload unrelated profile or universal rules.
+6. Read `docs/dynamic-rules/PROJECT-CONVENTIONS.md` if present; skip if absent. Resolve shared widgets, helpers, and layout from it before falling back to the profile default.
 
 Never load or mix multiple profiles. If `PROJECT_PROFILE.md` is missing or invalid, stop and ask for the profile; do not infer it from dependencies.
 

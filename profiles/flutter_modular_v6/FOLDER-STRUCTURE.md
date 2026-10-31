@@ -16,3 +16,4 @@ feature/<name>/
 Shared app routes live in `lib/routes/`. Common infrastructure follows the existing `core/` layout: `shared/` (single `shared.dart` barrel), tokens/constants, `error/`, and `network/` (`EnvelopeResponse`, `Paginated`) or the project equivalent.
 
 Every folder keeps a barrel named after the folder; import through barrels, never deep-file paths.
+Shared-widget location and component names resolve from `docs/dynamic-rules/PROJECT-CONVENTIONS.md` when present; the `core/` layout above is the default otherwise.
